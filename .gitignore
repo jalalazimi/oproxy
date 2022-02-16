@@ -21,3 +21,5 @@ yarn-error.log*
 .metals
 .vscode
 
+*.log
+dist

@@ -1,13 +1,9 @@
-import get from 'lodash/get';
 import { expr } from '../../utils/expr';
+import { get } from '../../utils/get';
 import { isExpr } from '../../utils/isExpr';
 import { NumberPlugins } from './plugins';
 
 class _Number extends NumberPlugins {
-  constructor(key: string) {
-    super(key);
-  }
-
   run(obj: any) {
     const key = this._key;
 

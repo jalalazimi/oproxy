@@ -1,7 +1,9 @@
 import { string } from './plugins/string';
 import { number } from './plugins/number';
 import { array } from './plugins/array';
-import isObject from 'lodash/isObject';
+import { boolean } from './plugins/boolean';
+import { id } from './plugins/id';
+import { isObject } from './utils/isObject';
 
 export function oproxy(src: any, schema: any) {
   const dist: any = {};
@@ -21,5 +23,5 @@ export function oproxy(src: any, schema: any) {
   return dist;
 }
 
-export { string, number, array };
+export { string, number, array, boolean, id };
 export default oproxy;

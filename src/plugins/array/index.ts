@@ -1,10 +1,7 @@
-import get from 'lodash/get';
+import { get } from '../../utils/get';
 import { ArrayPlugin } from './plugins';
 
 class _Array extends ArrayPlugin {
-  constructor(key: string) {
-    super(key);
-  }
   run(obj: any) {
     const array = get(obj, this._key);
     if (!Array.isArray(array)) {

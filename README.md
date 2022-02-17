@@ -33,3 +33,31 @@ npm install oproxy --save
 # or with yarn
 yarn add oproxy
 ```
+
+## Table of Contents
+
+- [API](#api)
+  - [`oproxy`](#oproxysrc-object-schema-schema))
+
+
+## API
+
+### `oproxy(src: object, schema: Schema)`
+
+For mapping `object` based on `schema`, you can use `oproxy` function.
+
+```js
+import oproxy, { string, number } from 'oproxy';
+
+const src = {
+  firstName: 'foo',
+  lastName: 'bar',
+};
+
+const schema = {
+  username: string('{firstName} {lastName}').capitalize(),
+};
+
+oproxy(src, schema);
+// { username: 'fooBar'}
+```

@@ -4,9 +4,6 @@ import { expr } from '../../utils/expr';
 import { get } from '../../utils/get';
 
 class _String extends StringPlugins {
-  constructor(key: string) {
-    super(key);
-  }
   run(obj: any) {
     const key = this._key;
 

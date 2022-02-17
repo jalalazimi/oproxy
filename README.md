@@ -37,7 +37,7 @@ yarn add oproxy
 ## Table of Contents
 
 - [API](#api)
-  - [`oproxy`](#oproxysrc-object-schema-schema))
+  - [`oproxy`](#oproxysrc-object-schema-schema)
 
 
 ## API

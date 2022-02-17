@@ -4,12 +4,14 @@ import _escapeRegExp from 'lodash/escapeRegExp';
 import _trim from 'lodash/trim';
 import _trimEnd from 'lodash/trimEnd';
 import _trimStart from 'lodash/trimStart';
+import { Core } from '../core';
 
-export class NumberPlugins {
-  tasks = new Map();
-
-  enqueue(name: string, fn: any) {
-    this.tasks.set(name, fn);
+export class NumberPlugins extends Core {
+  value(): NumberPlugins {
+    this.enqueue('value', (value: any): number => {
+      return value;
+    });
+    return this;
   }
 
   defaultValue(value: any): NumberPlugins {

@@ -1,18 +1,20 @@
 import oproxy, { number } from '../src';
 
+const src = {
+  born: '1990',
+  death: '2020',
+};
+
 describe('Number', () => {
   it('Normalize values', () => {
-    const src = {
-      age: '20',
-    };
     const schema = {
-      age: number('age'),
+      born: number('born'),
+      age: number('{death} - {born}'),
     };
 
-    const res = oproxy(src, schema);
-
-    expect(res).toEqual({
-      age: 20,
+    expect(oproxy(src, schema)).toEqual({
+      born: 1990,
+      age: 30,
     });
   });
 });

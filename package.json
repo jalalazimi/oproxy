@@ -44,8 +44,7 @@
   },
   "homepage": "https://github.com/jalalazimi/oproxy#readme",
   "module": "dist/oproxy.esm.js",
-  "size-limit": [
-    {
+  "size-limit": [{
       "path": "dist/oproxy.cjs.production.min.js",
       "limit": "10 KB"
     },

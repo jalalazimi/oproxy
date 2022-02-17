@@ -4,14 +4,9 @@ import _escapeRegExp from 'lodash/escapeRegExp';
 import _trim from 'lodash/trim';
 import _trimEnd from 'lodash/trimEnd';
 import _trimStart from 'lodash/trimStart';
+import { Core } from '../core';
 
-export class StringPlugins {
-  tasks = new Map();
-
-  enqueue(name: string, fn: any) {
-    this.tasks.set(name, fn);
-  }
-
+export class StringPlugins extends Core {
   defaultValue(value: any): StringPlugins {
     this.enqueue('defaultValue', (currentValue: any) => {
       if (Boolean(currentValue) === false) {

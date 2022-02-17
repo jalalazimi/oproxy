@@ -3,15 +3,15 @@ import { number } from './plugins/number';
 import { array } from './plugins/array';
 import { boolean } from './plugins/boolean';
 import { id } from './plugins/id';
-import { isObject } from './utils/isObject';
+import { isSchema } from './utils/isSchema';
 
-export function oproxy(src: any, schema: any) {
+function proxy(src: any, schema: any) {
   const dist: any = {};
+
   for (const prop in schema) {
     const value = schema[prop];
-
     switch (true) {
-      case isObject(value) && 'run' in value: {
+      case isSchema(value): {
         dist[prop] = value.run(src);
         break;
       }
@@ -21,6 +21,19 @@ export function oproxy(src: any, schema: any) {
     }
   }
   return dist;
+}
+
+function arrayProxy(array: any[], schema: any) {
+  return array.map(arr => {
+    return proxy(arr, schema);
+  });
+}
+
+export function oproxy(src: any, schema: any) {
+  if (Array.isArray(src)) {
+    return arrayProxy(src, schema);
+  }
+  return proxy(src, schema);
 }
 
 export { string, number, array, boolean, id };

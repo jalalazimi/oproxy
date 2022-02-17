@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import { get } from './get';
 
 function parse(str: string) {
   return Function(`'use strict'; return (${str})`)();

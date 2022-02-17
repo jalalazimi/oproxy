@@ -1,5 +1,3 @@
-import _compact from 'lodash/compact';
-import _drop from 'lodash/drop';
 import { Core } from '../core';
 
 export class ArrayPlugin extends Core {
@@ -26,7 +24,7 @@ export class ArrayPlugin extends Core {
 
   drop(number = 1): ArrayPlugin {
     this.enqueue('drop', (arr: any) => {
-      return _drop(arr, number);
+      return arr.slice(number);
     });
     return this;
   }

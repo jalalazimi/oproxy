@@ -1,7 +1,7 @@
 import { StringPlugins } from './plugins';
-import get from 'lodash/get';
 import { isExpr } from '../../utils/isExpr';
 import { expr } from '../../utils/expr';
+import { get } from '../../utils/get';
 
 class _String extends StringPlugins {
   constructor(key: string) {

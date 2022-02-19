@@ -96,4 +96,39 @@ export class StringPlugins extends Core {
     });
     return this;
   }
+
+  replace(str: string | RegExp, newString: any): StringPlugins {
+    this.enqueue('replace', (currentValue: any) => {
+      return currentValue.replace(str, newString);
+    });
+    return this;
+  }
+
+  toLocaleLowerCase(locale: any): StringPlugins {
+    this.enqueue('toLocaleLowerCase', (currentValue: any) => {
+      return currentValue.toLocaleLowerCase(locale);
+    });
+    return this;
+  }
+
+  replaceAll(str: string | RegExp, newString: any): StringPlugins {
+    this.enqueue('replaceAll', (currentValue: any) => {
+      return currentValue.replaceAll(str, newString);
+    });
+    return this;
+  }
+
+  padStart(targetLength: number, padString?: string): StringPlugins {
+    this.enqueue('padStart', (currentValue: any) => {
+      return currentValue.padStart(targetLength, padString);
+    });
+    return this;
+  }
+  
+  padEnd(targetLength: number, padString?: string): StringPlugins {
+    this.enqueue('padEnd', (currentValue: any) => {
+      return String(currentValue).padEnd(targetLength, padString);
+    });
+    return this;
+  }
 }

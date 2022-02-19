@@ -1,7 +1,7 @@
 {
   "name": "oproxy",
   "version": "0.0.3",
-  "description": "Normalizes data . according to a schema",
+  "description": "A schema-based data mapper",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

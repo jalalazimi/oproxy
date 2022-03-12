@@ -9,7 +9,7 @@ import { isExpr } from './utils/isExpr';
 import { get } from './utils/get';
 
 export interface Schema {
-  [key: string]: any
+  [key: string]: any;
 }
 
 function run<T>(src: T, schema: Schema) {

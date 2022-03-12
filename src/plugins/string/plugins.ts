@@ -38,7 +38,7 @@ export class StringPlugins extends Core {
    * @example
    * O('name').upperCase(); // 'VALUE'
    */
-   upperCase(): this {
+  upperCase(): this {
     return this.enqueue('upperCase', (currentValue: string) => {
       return currentValue.toUpperCase();
     });

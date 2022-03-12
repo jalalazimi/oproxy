@@ -5,14 +5,31 @@ import { trim, trimEnd, trimStart } from '../../utils/trim';
 import { Core } from '../core';
 
 export class StringPlugins extends Core {
-  defaultValue(value: any): StringPlugins {
-    this.enqueue('defaultValue', (currentValue: any) => {
+  name = 'string';
+  constructor(key: string) {
+    super(key);
+    this.toString();
+  }
+
+  toString(): this {
+    return this.enqueue('toString', (currentValue?: any) => {
+      if (typeof currentValue === 'string') {
+        return currentValue;
+      }
+      if ([null, undefined].includes(currentValue)) {
+        return '';
+      }
+      return String(currentValue);
+    });
+  }
+
+  defaultValue(value: string): this {
+    return this.enqueue('defaultValue', (currentValue: string) => {
       if (Boolean(currentValue) === false) {
         return value;
       }
       return currentValue;
     });
-    return this;
   }
 
   /**
@@ -21,114 +38,101 @@ export class StringPlugins extends Core {
    * @example
    * O('name').upperCase(); // 'VALUE'
    */
-  upperCase(): StringPlugins {
-    this.enqueue('upperCase', (currentValue: any) => {
-      return String(currentValue).toUpperCase();
+   upperCase(): this {
+    return this.enqueue('upperCase', (currentValue: string) => {
+      return currentValue.toUpperCase();
     });
-    return this;
   }
 
-  lowerCase(): StringPlugins {
-    this.enqueue('lowerCase', (currentValue: any) => {
-      return String(currentValue).toLowerCase();
+  lowerCase(): this {
+    return this.enqueue('lowerCase', (currentValue: string) => {
+      return currentValue.toLowerCase();
     });
-    return this;
   }
 
   /**
    * Convert to camelCase
    * @returns {string}
    */
-  camelCase(): StringPlugins {
-    this.enqueue('camelCase', (currentValue: any) => {
+  camelCase(): this {
+    return this.enqueue('camelCase', (currentValue: string) => {
       return camelCase(currentValue);
     });
-    return this;
   }
 
-  escape(): StringPlugins {
-    this.enqueue('escape', (currentValue: any) => {
+  escape(): this {
+    return this.enqueue('escape', (currentValue: string) => {
       return escape(currentValue);
     });
-    return this;
   }
 
   /**
    * Escapes the RegExp special characters "^", "$", "", ".", "*", "+", "?", "(", ")", "[", "]", "{", "}", and "|" in string.
    * @returns {string}
    */
-  escapeRegExp(): StringPlugins {
-    this.enqueue('escapeRegExp', (currentValue: any) => {
+  escapeRegExp(): this {
+    return this.enqueue('escapeRegExp', (currentValue: string) => {
       return escapeRegExp(currentValue);
     });
-    return this;
   }
 
   /**
    * Removes leading and trailing whitespace or specified characters from string.
    * @returns {string}
    */
-  trim(): StringPlugins {
-    this.enqueue('trim', (currentValue: any) => {
+  trim(): this {
+    return this.enqueue('trim', (currentValue: string) => {
       return trim(currentValue);
     });
-    return this;
   }
 
   /**
    * Removes trailing whitespace or specified characters from string
    * @returns {string}
    */
-  trimEnd(): StringPlugins {
-    this.enqueue('trimEnd', (currentValue: any) => {
+  trimEnd(): this {
+    return this.enqueue('trimEnd', (currentValue: string) => {
       return trimEnd(currentValue);
     });
-    return this;
   }
 
   /**
    * Removes leading whitespace or specified characters from string.
    * @returns {string}
    */
-  trimStart(): StringPlugins {
-    this.enqueue('trimStart', (currentValue: any) => {
+  trimStart(): this {
+    return this.enqueue('trimStart', (currentValue: string) => {
       return trimStart(currentValue);
     });
-    return this;
   }
 
-  replace(str: string | RegExp, newString: any): StringPlugins {
-    this.enqueue('replace', (currentValue: any) => {
+  replace(str: string | RegExp, newString: any): this {
+    return this.enqueue('replace', (currentValue: string) => {
       return currentValue.replace(str, newString);
     });
-    return this;
   }
 
-  toLocaleLowerCase(locale: any): StringPlugins {
-    this.enqueue('toLocaleLowerCase', (currentValue: any) => {
+  toLocaleLowerCase(locale: any): this {
+    return this.enqueue('toLocaleLowerCase', (currentValue: string) => {
       return currentValue.toLocaleLowerCase(locale);
     });
-    return this;
   }
 
-  replaceAll(str: string | RegExp, newString: any): StringPlugins {
-    this.enqueue('replaceAll', (currentValue: any) => {
+  replaceAll(str: string | RegExp, newString: any): this {
+    return this.enqueue('replaceAll', (currentValue: string) => {
       return currentValue.replaceAll(str, newString);
     });
-    return this;
   }
 
-  padStart(targetLength: number, padString?: string): StringPlugins {
-    this.enqueue('padStart', (currentValue: any) => {
+  padStart(targetLength: number, padString?: string): this {
+    return this.enqueue('padStart', (currentValue: string) => {
       return currentValue.padStart(targetLength, padString);
     });
-    return this;
   }
-  
+
   padEnd(targetLength: number, padString?: string): StringPlugins {
-    this.enqueue('padEnd', (currentValue: any) => {
+    return this.enqueue('padEnd', (currentValue: string) => {
       return String(currentValue).padEnd(targetLength, padString);
     });
-    return this;
   }
 }

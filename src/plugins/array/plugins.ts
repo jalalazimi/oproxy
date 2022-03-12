@@ -1,55 +1,51 @@
 import { Core } from '../core';
 
 export class ArrayPlugin extends Core {
+  name = 'array';
+
   defaultValue(value: any): ArrayPlugin {
-    this.enqueue('defaultValue', (arr: any) => {
+    return this.enqueue('defaultValue', <T>(arr: T[]) => {
       if (arr === undefined || arr === null || arr.length === 0) {
         return value;
       }
       return arr;
     });
-    return this;
   }
 
   chunk(size: number): ArrayPlugin {
-    this.enqueue('chunk', (array: any) => {
+    return this.enqueue('chunk', <T>(array: T[]) => {
       return array.reduce((arr: any[], item: any, idx: number) => {
         return idx % size === 0
           ? [...arr, [item]]
           : [...arr.slice(0, -1), [...arr.slice(-1)[0], item]];
       }, []);
     });
-    return this;
   }
 
   drop(number = 1): ArrayPlugin {
-    this.enqueue('drop', (arr: any) => {
+    return this.enqueue('drop', <T>(arr: T[]) => {
       return arr.slice(number);
     });
-    return this;
   }
 
   compact(): ArrayPlugin {
-    this.enqueue('compact', (arr: any) => {
+    return this.enqueue('compact', <T>(arr: T[]) => {
       return arr.filter(Boolean);
     });
-    return this;
   }
 
   filter(fn: (item: unknown) => boolean): ArrayPlugin {
-    this.enqueue('filter', (arr: any[]) => {
+    return this.enqueue('filter', <T>(arr: T[]) => {
       return arr.filter(fn);
     });
-    return this;
   }
 
   map(
     callbackfn: (value: any, index: number, array: any[]) => any[]
   ): ArrayPlugin {
-    this.enqueue('map', (arr: any[]) => {
+    return this.enqueue('map', <T>(arr: T[]) => {
       return arr.map(callbackfn);
     });
-    return this;
   }
 
   reduce(
@@ -61,10 +57,9 @@ export class ArrayPlugin extends Core {
     ) => any,
     array: any
   ): ArrayPlugin {
-    this.enqueue('reduce', (arr: any[]) => {
+    return this.enqueue('reduce', <T>(arr: T[]) => {
       return arr.reduce(fn, array);
     });
-    return this;
   }
 
   reduceRight(
@@ -76,39 +71,34 @@ export class ArrayPlugin extends Core {
     ) => any,
     array: any
   ): ArrayPlugin {
-    this.enqueue('reduceRight', (arr: any[]) => {
+    return this.enqueue('reduceRight', <T>(arr: T[]) => {
       return arr.reduceRight(fn, array);
     });
-    return this;
   }
 
   every(fn: (value: any, index: number, array: any[]) => boolean): ArrayPlugin {
-    this.enqueue('every', (arr: any[]): boolean => {
+    return this.enqueue('every', <T>(arr: T[]): boolean => {
       return arr.every(fn);
     });
-    return this;
   }
 
   sort(
     compareFn?: (firstElement: any, secondElement: any) => number
   ): ArrayPlugin {
-    this.enqueue('sort', (arr: any[]): any[] => {
+    return this.enqueue('sort', <T>(arr: T[]): T[] => {
       return arr.sort(compareFn);
     });
-    return this;
   }
 
   includes(searchElement: any, fromIndex?: number): ArrayPlugin {
-    this.enqueue('includes', (arr: any[]): boolean => {
+    return this.enqueue('includes', <T>(arr: T[]): boolean => {
       return arr.includes(searchElement, fromIndex);
     });
-    return this;
   }
 
   toString(): ArrayPlugin {
-    this.enqueue('includes', (arr: any[]): string => {
+    return this.enqueue('includes', <T>(arr: T[]): string => {
       return arr.toString();
     });
-    return this;
   }
 }

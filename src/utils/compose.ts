@@ -1,6 +1,6 @@
-export const compose = (arr: any[], obj: any) =>
-  arr.reduce(
-    (updatedValue: any, currentFunc: (arg0: any) => any) =>
-      currentFunc(updatedValue),
-    obj
-  );
+export const compose = <T>(arr: any[], val: T) =>
+  arr.reduce((prevValue: T, currentFunc) => {
+    return typeof currentFunc === 'function'
+      ? currentFunc(prevValue)
+      : prevValue;
+  }, val);

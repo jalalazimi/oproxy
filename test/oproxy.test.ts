@@ -7,8 +7,8 @@ const src = {
   cities: ['Dublin', 'London', undefined, 'New York', false],
 };
 
-describe('Number', () => {
-  it('Normalize values', () => {
+describe('Oproxy', () => {
+  it('array of Object', () => {
     const schema = {
       list: array('users'),
     };

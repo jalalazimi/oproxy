@@ -38,6 +38,7 @@ yarn add oproxy
 
 - [API](#api)
   - [`oproxy`](#oproxysrc-object-schema-schema)
+  - [`array`](#oproxysrc-object-schema-schema)
 
 
 ## API
@@ -61,3 +62,25 @@ const schema = {
 oproxy(src, schema);
 // { username: 'fooBar'}
 ```
+
+
+### array
+
+Handles array based on schema.
+
+```js
+import oproxy, { array } from 'oproxy';
+
+const src = {
+  users: ['foo', 'bar', 'baz', 'qux'],
+};
+
+const schema = {
+  list: array('users').map(item => item.toUpperCase()),
+};
+
+oproxy(src, schema);
+// { list: ['FOO', 'BAR', 'BAZ', 'QUX'] }
+```
+
+[Full Documentation](/src/plugins/array/README.md)

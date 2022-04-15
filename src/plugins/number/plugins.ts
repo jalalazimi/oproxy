@@ -16,6 +16,12 @@ export class NumberPlugins extends Core {
     });
   }
 
+  formatter(cb: (value:number, data:any)=>number): this { 
+    return this.enqueue('numberFormatter', (value?:any, data?:any) => {
+      return cb(value, data.source);
+    });
+  }
+
   defaultValue(value: unknown): NumberPlugins {
     return this.enqueue('defaultValue', (currentValue: any) => {
       if (isNaN(currentValue)) {

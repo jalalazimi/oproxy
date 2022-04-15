@@ -1,7 +1,7 @@
 import { Core } from '../core';
 
 export class BooleanPlugin extends Core {
-  name = 'boolean';
+  readonly name = 'boolean';
 
   defaultValue(value: any): BooleanPlugin {
     this.enqueue('defaultValue', (currentValue: any) => {

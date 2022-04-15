@@ -1,7 +1,9 @@
-import { Core } from '../core';
+import oproxy from '../..';
+import { Schema } from '../../types';
+import { cancelSymbol, Core } from '../core';
 
 export class ArrayPlugin extends Core {
-  name = 'array';
+  readonly name = 'array';
 
   defaultValue(value: any): ArrayPlugin {
     return this.enqueue('defaultValue', <T>(arr: T[]) => {
@@ -9,6 +11,18 @@ export class ArrayPlugin extends Core {
         return value;
       }
       return arr;
+    });
+  }
+
+  proxy(schema: Schema): ArrayPlugin {
+    return this.enqueue('proxy', <T>(array: T[], data: any) => {
+      if (!array) return cancelSymbol;
+
+      if (array && schema.recursive) {
+        return oproxy(array, data.schema);
+      }
+
+      return oproxy(array, schema);
     });
   }
 

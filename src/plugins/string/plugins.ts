@@ -5,10 +5,16 @@ import { trim, trimEnd, trimStart } from '../../utils/trim';
 import { Core } from '../core';
 
 export class StringPlugins extends Core {
-  name = 'string';
-  constructor(key: string) {
+  readonly name = 'string';
+  constructor(key?: string) {
     super(key);
     this.toString();
+  }
+
+  formatter(cb: (value:string, data:any)=>string): this { 
+    return this.enqueue('stringFormatter', (value?:any, data?:any) => {
+      return String(cb(value, data.source));
+    });
   }
 
   toString(): this {

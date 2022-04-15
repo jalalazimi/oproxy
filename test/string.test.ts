@@ -2,7 +2,7 @@ import oproxy, { string } from '../src';
 
 const src = {
   name: 'foo',
-  family: 'Bar',
+  family: 'bar',
   city: undefined,
   bio: 'me, you, & them',
   readme: '[oproxy](https://oproxy.com/)',
@@ -17,13 +17,15 @@ describe('String', () => {
     const schema = {
       age: string('user.age'),
       username: string('name'),
-      full: string('{name} {family}').lowerCase(),
+      full: string('name').formatter((name,data) => `${name} ${data.family}`),
+      birthDate: string('user.age').formatter((age) => `${new Date().getFullYear() - Number(age)}`),
     };
 
     expect(oproxy(src, schema)).toEqual({
       age: '20',
       username: 'foo',
       full: 'foo bar',
+      birthDate: '2002'
     });
   });
   it('default value string', () => {

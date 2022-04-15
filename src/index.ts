@@ -4,32 +4,29 @@ import { array } from './plugins/array';
 import { boolean } from './plugins/boolean';
 import { isSchema } from './utils/isSchema';
 import { compose } from './utils/compose';
-import { expr } from './utils/expr';
-import { isExpr } from './utils/isExpr';
 import { get } from './utils/get';
+import { InferType, Schema } from './types';
+import { cancelSymbol } from './plugins/core';
 
-export interface Schema {
-  [key: string]: any
-}
-
-function run<T>(src: T, schema: Schema) {
+function run<T>(src: T, schema: any, schemaObject: any, key: string) {
   const fns = Array.from(schema?.tasks.values());
   const fnsSize = fns.length;
-  const val = isExpr(schema.key)
-    ? expr(schema.key, src, schema.name === 'string')
-    : get(src, schema.key);
+  const val = get(src, schema.key);
 
-  return fnsSize ? compose(fns, val) : val;
+  return fnsSize
+    ? compose(fns, val, { source: src, schema: schemaObject, key })
+    : val;
 }
 
-function proxy<T, S>(src: T, schema: S) {
-  const dist = {} as Record<keyof S, unknown>;
+function proxy<T, S>(src: T, schema: S): typeof schema {
+  const dist = {} as any;
 
   for (const prop in schema) {
     const value = schema[prop];
     switch (true) {
       case isSchema(value): {
-        dist[prop] = run(src, value);
+        const result = run<T>(src, value, schema, prop);
+        if (result !== cancelSymbol) dist[prop] = result;
         break;
       }
       default: {
@@ -53,5 +50,5 @@ export function oproxy<T>(src: T, schema: Schema) {
   return proxy(src, schema);
 }
 
-export { string, number, array, boolean };
+export { string, number, array, boolean, InferType };
 export default oproxy;

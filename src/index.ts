@@ -6,7 +6,7 @@ import { isSchema } from './utils/isSchema';
 import { compose } from './utils/compose';
 import { get } from './utils/get';
 import { InferType, Schema } from './types';
-import { cancelSymbol } from './plugins/core';
+import { canceledSymbol } from './plugins/core';
 
 function run<T>(src: T, schema: any, schemaObject: any, key: string) {
   const fns = Array.from(schema?.tasks.values());
@@ -18,15 +18,17 @@ function run<T>(src: T, schema: any, schemaObject: any, key: string) {
     : val;
 }
 
-function proxy<T, S>(src: T, schema: S): typeof schema {
-  const dist = {} as any;
+function proxy<T, S>(source: T, schema: InferType<S>): InferType<S> {
+  const dist = {} as InferType<S>;
 
   for (const prop in schema) {
     const value = schema[prop];
     switch (true) {
       case isSchema(value): {
-        const result = run<T>(src, value, schema, prop);
-        if (result !== cancelSymbol) dist[prop] = result;
+        const result = run<T>(source, value, schema, prop);
+        if (result !== canceledSymbol) {
+          dist[prop] = result;
+        }
         break;
       }
       default: {
@@ -37,17 +39,17 @@ function proxy<T, S>(src: T, schema: S): typeof schema {
   return dist;
 }
 
-function collectionIterator<T, S>(collection: T[], schema: S) {
+function collectionIterator<T, S>(collection: T[], schema: InferType<S>) {
   return collection.map(obj => {
     return proxy(obj, schema);
   });
 }
 
-export function oproxy<T>(src: T, schema: Schema) {
-  if (Array.isArray(src)) {
-    return collectionIterator(src, schema);
+export function oproxy<T>(source: T, schema: Schema) {
+  if (Array.isArray(source)) {
+    return collectionIterator(source, schema);
   }
-  return proxy(src, schema);
+  return proxy(source, schema);
 }
 
 export { string, number, array, boolean, InferType };

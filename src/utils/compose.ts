@@ -1,10 +1,10 @@
 
-import { Schema } from '../types';
+import type { ComposeData } from '../types';
 
 export const compose = <T, V>(
   arr: any[],
   val: V,
-  data: { source: unknown; schema: Schema; key: string }
+  data: ComposeData
 ) =>
   arr.reduce((prevValue: T, currentFunc) => {
  return typeof currentFunc === 'function'

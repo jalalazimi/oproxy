@@ -1,7 +1,7 @@
+import { ComposeData } from '../../types';
 import { Core } from '../core';
 
 export class NumberPlugins extends Core {
-  name = 'number';
   constructor(key: string) {
     super(key);
     this.toNumber();
@@ -16,8 +16,8 @@ export class NumberPlugins extends Core {
     });
   }
 
-  formatter(cb: (value:number, data:any)=>number): this { 
-    return this.enqueue('numberFormatter', (value?:any, data?:any) => {
+  formatter(cb: (value: number, data: unknown) => number): this {
+    return this.enqueue('numberFormatter', (value: number, data: ComposeData) => {
       return cb(value, data.source);
     });
   }

@@ -4,7 +4,6 @@ import { BooleanPlugin } from './plugins/boolean/plugins';
 import { ArrayPlugin } from './plugins/array/plugins';
 
 export type AnyObject = { [k: string]: any };
-export type Flags = 's' | 'd' | '';
 
 type MapObjectIdToString<PropType> = PropType extends StringPlugins
   ? string
@@ -14,10 +13,16 @@ type MapObjectIdToString<PropType> = PropType extends StringPlugins
   ? boolean
   : PropType extends ArrayPlugin
   ? Array<unknown>
-  : PropType
+  : PropType;
 
 export type InferType<T> = {
   [PropertyKey in keyof T]: MapObjectIdToString<T[PropertyKey]>;
 };
 
-export type Schema = AnyObject & { recursive?: boolean };
+export type Schema = AnyObject & Options;
+export type Options = {
+  /** Iterate over the object recursively*/
+  recursive?: boolean;
+};
+
+export type ComposeData = { source: unknown; schema: Schema; key: string };

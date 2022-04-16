@@ -1,8 +1,7 @@
+import { ComposeData } from '../../types';
 import { Core } from '../core';
 
 export class BooleanPlugin extends Core {
-  readonly name = 'boolean';
-
   defaultValue(value: any): BooleanPlugin {
     this.enqueue('defaultValue', (currentValue: any) => {
       if (currentValue === undefined || currentValue === null) {
@@ -18,5 +17,11 @@ export class BooleanPlugin extends Core {
       return value.toString();
     });
     return this;
+  }
+
+  formatter(cb: (value: boolean, data: unknown) => number): this {
+    return this.enqueue('formatter', (value: boolean, data: ComposeData) => {
+      return cb(value, data.source);
+    });
   }
 }

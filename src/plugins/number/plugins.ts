@@ -17,9 +17,12 @@ export class NumberPlugins extends Core {
   }
 
   formatter(cb: (value: number, data: unknown) => number): this {
-    return this.enqueue('numberFormatter', (value: number, data: ComposeData) => {
-      return cb(value, data.source);
-    });
+    return this.enqueue(
+      'numberFormatter',
+      (value: number, data: ComposeData) => {
+        return cb(value, data.source);
+      }
+    );
   }
 
   defaultValue(value: unknown): NumberPlugins {

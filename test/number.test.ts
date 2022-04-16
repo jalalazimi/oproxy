@@ -9,7 +9,7 @@ describe('Number', () => {
   it('Normalize values', () => {
     const schema = {
       born: number('born'),
-      age: number('death').formatter((death,{born}) => death - born),
+      age: number('death').formatter((death, { born }) => death - born),
     };
 
     expect(oproxy(src, schema)).toEqual({

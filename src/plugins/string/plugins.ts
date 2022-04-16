@@ -1,4 +1,4 @@
-import type { ComposeData } from '../../types';
+import { ComposeData } from '../../types';
 import { camelCase } from '../../utils/case';
 import { escape } from '../../utils/escape';
 import { escapeRegExp } from '../../utils/escapeRegExp';

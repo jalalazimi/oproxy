@@ -17,15 +17,17 @@ describe('String', () => {
     const schema = {
       age: string('user.age'),
       username: string('name'),
-      full: string('name').formatter((name,data) => `${name} ${data.family}`),
-      birthDate: string('user.age').formatter((age) => `${new Date().getFullYear() - Number(age)}`),
+      full: string('name').formatter((name, data) => `${name} ${data.family}`),
+      birthDate: string('user.age').formatter(
+        age => `${new Date().getFullYear() - Number(age)}`
+      ),
     };
 
     expect(oproxy(src, schema)).toEqual({
       age: '20',
       username: 'foo',
       full: 'foo bar',
-      birthDate: '2002'
+      birthDate: '2002',
     });
   });
   it('default value string', () => {

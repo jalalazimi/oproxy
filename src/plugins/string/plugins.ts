@@ -11,7 +11,7 @@ export class StringPlugins extends Core {
     this.toString();
   }
 
-  formatter(cb: (value: string, data: unknown) => string): this {
+  formatter(cb: (value: string, data: any) => string): this {
     return this.enqueue('stringFormatter', (value: any, data: ComposeData) => {
       return String(cb(value, data.source));
     });

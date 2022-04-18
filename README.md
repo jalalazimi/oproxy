@@ -1,4 +1,4 @@
-# oproxy (🚧 Under Construction)
+# oproxy 🚧 Under Construction
 
 Oproxy is a schema-based data mapper. Just define your schema, then transform it into that shape. Oproxy's schema is simple, intuitive, flexible and readable.
 

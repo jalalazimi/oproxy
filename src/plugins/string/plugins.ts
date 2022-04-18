@@ -1,3 +1,4 @@
+import { ComposeData } from '../../types';
 import { camelCase } from '../../utils/case';
 import { escape } from '../../utils/escape';
 import { escapeRegExp } from '../../utils/escapeRegExp';
@@ -5,10 +6,15 @@ import { trim, trimEnd, trimStart } from '../../utils/trim';
 import { Core } from '../core';
 
 export class StringPlugins extends Core {
-  name = 'string';
-  constructor(key: string) {
+  constructor(key?: string) {
     super(key);
     this.toString();
+  }
+
+  formatter(cb: (value: string, data: any) => string): this {
+    return this.enqueue('stringFormatter', (value: any, data: ComposeData) => {
+      return String(cb(value, data.source));
+    });
   }
 
   toString(): this {
@@ -38,7 +44,7 @@ export class StringPlugins extends Core {
    * @example
    * O('name').upperCase(); // 'VALUE'
    */
-   upperCase(): this {
+  upperCase(): this {
     return this.enqueue('upperCase', (currentValue: string) => {
       return currentValue.toUpperCase();
     });

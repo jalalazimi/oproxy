@@ -1,14 +1,32 @@
-import { Core } from '../core';
+import oproxy from '../..';
+import { ComposeData, Schema } from '../../types';
+import { canceledSymbol, Core } from '../core';
 
 export class ArrayPlugin extends Core {
-  name = 'array';
-
   defaultValue(value: any): ArrayPlugin {
     return this.enqueue('defaultValue', <T>(arr: T[]) => {
       if (arr === undefined || arr === null || arr.length === 0) {
         return value;
       }
       return arr;
+    });
+  }
+
+  proxy(schema: Schema): ArrayPlugin {
+    return this.enqueue('proxy', <T>(array: T[], data: any) => {
+      if (!array) return canceledSymbol;
+
+      if (array && schema.recursive) {
+        return oproxy(array, data.schema);
+      }
+
+      return oproxy(array, schema);
+    });
+  }
+
+  formatter(cb: (value: any[], data: unknown) => number): this {
+    return this.enqueue('formatter', <T>(value: T[], data: ComposeData) => {
+      return cb(value, data.source);
     });
   }
 

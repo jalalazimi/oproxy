@@ -4,32 +4,31 @@ import { array } from './plugins/array';
 import { boolean } from './plugins/boolean';
 import { isSchema } from './utils/isSchema';
 import { compose } from './utils/compose';
-import { expr } from './utils/expr';
-import { isExpr } from './utils/isExpr';
 import { get } from './utils/get';
+import { InferType, Schema } from './types';
+import { canceledSymbol } from './plugins/core';
 
-export interface Schema {
-  [key: string]: any
-}
-
-function run<T>(src: T, schema: Schema) {
+function run<T>(src: T, schema: any, schemaObject: any, key: string) {
   const fns = Array.from(schema?.tasks.values());
   const fnsSize = fns.length;
-  const val = isExpr(schema.key)
-    ? expr(schema.key, src, schema.name === 'string')
-    : get(src, schema.key);
+  const val = get(src, schema.key);
 
-  return fnsSize ? compose(fns, val) : val;
+  return fnsSize
+    ? compose(fns, val, { source: src, schema: schemaObject, key })
+    : val;
 }
 
-function proxy<T, S>(src: T, schema: S) {
-  const dist = {} as Record<keyof S, unknown>;
+function proxy<T, S>(source: T, schema: InferType<S>): InferType<S> {
+  const dist = {} as InferType<S>;
 
   for (const prop in schema) {
     const value = schema[prop];
     switch (true) {
       case isSchema(value): {
-        dist[prop] = run(src, value);
+        const result = run<T>(source, value, schema, prop);
+        if (result !== canceledSymbol) {
+          dist[prop] = result;
+        }
         break;
       }
       default: {
@@ -40,18 +39,18 @@ function proxy<T, S>(src: T, schema: S) {
   return dist;
 }
 
-function collectionIterator<T, S>(collection: T[], schema: S) {
+function collectionIterator<T, S>(collection: T[], schema: InferType<S>) {
   return collection.map(obj => {
     return proxy(obj, schema);
   });
 }
 
-export function oproxy<T>(src: T, schema: Schema) {
-  if (Array.isArray(src)) {
-    return collectionIterator(src, schema);
+export function oproxy<T>(source: T, schema: Schema) {
+  if (Array.isArray(source)) {
+    return collectionIterator(source, schema);
   }
-  return proxy(src, schema);
+  return proxy(source, schema);
 }
 
-export { string, number, array, boolean };
+export { string, number, array, boolean, InferType };
 export default oproxy;

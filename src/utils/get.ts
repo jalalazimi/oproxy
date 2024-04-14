@@ -5,8 +5,8 @@ export function get(obj: any, path: any, defaultValue: any = undefined) {
       .filter(Boolean)
       .reduce(
         (res, key) => (res !== null && res !== undefined ? res[key] : res),
-        obj
-      );
-  const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
-  return result === undefined || result === obj ? defaultValue : result;
+        obj,
+      )
+  const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/)
+  return result === undefined || result === obj ? defaultValue : result
 }

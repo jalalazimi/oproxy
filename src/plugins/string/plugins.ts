@@ -1,41 +1,41 @@
-import { ComposeData } from '../../types';
-import { camelCase } from '../../utils/case';
-import { escape } from '../../utils/escape';
-import { escapeRegExp } from '../../utils/escapeRegExp';
-import { trim, trimEnd, trimStart } from '../../utils/trim';
-import { Core } from '../core';
+import type { ComposeData } from '../../types'
+import { camelCase } from '../../utils/case'
+import { escape } from '../../utils/escape'
+import { escapeRegExp } from '../../utils/escapeRegExp'
+import { trim, trimEnd, trimStart } from '../../utils/trim'
+import { Core } from '../core'
 
 export class StringPlugins extends Core {
   constructor(key?: string) {
-    super(key);
-    this.toString();
+    super(key)
+    this.toString()
   }
 
   formatter(cb: (value: string, data: any) => string): this {
     return this.enqueue('stringFormatter', (value: any, data: ComposeData) => {
-      return String(cb(value, data.source));
-    });
+      return String(cb(value, data.source))
+    })
   }
 
   toString(): this {
     return this.enqueue('toString', (currentValue?: any) => {
-      if (typeof currentValue === 'string') {
-        return currentValue;
-      }
-      if ([null, undefined].includes(currentValue)) {
-        return '';
-      }
-      return String(currentValue);
-    });
+      if (typeof currentValue === 'string')
+        return currentValue
+
+      if ([null, undefined].includes(currentValue))
+        return ''
+
+      return String(currentValue)
+    })
   }
 
   defaultValue(value: string): this {
     return this.enqueue('defaultValue', (currentValue: string) => {
-      if (Boolean(currentValue) === false) {
-        return value;
-      }
-      return currentValue;
-    });
+      if (Boolean(currentValue) === false)
+        return value
+
+      return currentValue
+    })
   }
 
   /**
@@ -46,14 +46,14 @@ export class StringPlugins extends Core {
    */
   upperCase(): this {
     return this.enqueue('upperCase', (currentValue: string) => {
-      return currentValue.toUpperCase();
-    });
+      return currentValue.toUpperCase()
+    })
   }
 
   lowerCase(): this {
     return this.enqueue('lowerCase', (currentValue: string) => {
-      return currentValue.toLowerCase();
-    });
+      return currentValue.toLowerCase()
+    })
   }
 
   /**
@@ -62,14 +62,14 @@ export class StringPlugins extends Core {
    */
   camelCase(): this {
     return this.enqueue('camelCase', (currentValue: string) => {
-      return camelCase(currentValue);
-    });
+      return camelCase(currentValue)
+    })
   }
 
   escape(): this {
     return this.enqueue('escape', (currentValue: string) => {
-      return escape(currentValue);
-    });
+      return escape(currentValue)
+    })
   }
 
   /**
@@ -78,8 +78,8 @@ export class StringPlugins extends Core {
    */
   escapeRegExp(): this {
     return this.enqueue('escapeRegExp', (currentValue: string) => {
-      return escapeRegExp(currentValue);
-    });
+      return escapeRegExp(currentValue)
+    })
   }
 
   /**
@@ -88,8 +88,8 @@ export class StringPlugins extends Core {
    */
   trim(): this {
     return this.enqueue('trim', (currentValue: string) => {
-      return trim(currentValue);
-    });
+      return trim(currentValue)
+    })
   }
 
   /**
@@ -98,8 +98,8 @@ export class StringPlugins extends Core {
    */
   trimEnd(): this {
     return this.enqueue('trimEnd', (currentValue: string) => {
-      return trimEnd(currentValue);
-    });
+      return trimEnd(currentValue)
+    })
   }
 
   /**
@@ -108,37 +108,37 @@ export class StringPlugins extends Core {
    */
   trimStart(): this {
     return this.enqueue('trimStart', (currentValue: string) => {
-      return trimStart(currentValue);
-    });
+      return trimStart(currentValue)
+    })
   }
 
   replace(str: string | RegExp, newString: any): this {
     return this.enqueue('replace', (currentValue: string) => {
-      return currentValue.replace(str, newString);
-    });
+      return currentValue.replace(str, newString)
+    })
   }
 
   toLocaleLowerCase(locale: any): this {
     return this.enqueue('toLocaleLowerCase', (currentValue: string) => {
-      return currentValue.toLocaleLowerCase(locale);
-    });
+      return currentValue.toLocaleLowerCase(locale)
+    })
   }
 
   replaceAll(str: string | RegExp, newString: any): this {
     return this.enqueue('replaceAll', (currentValue: string) => {
-      return currentValue.replaceAll(str, newString);
-    });
+      return currentValue.replaceAll(str, newString)
+    })
   }
 
   padStart(targetLength: number, padString?: string): this {
     return this.enqueue('padStart', (currentValue: string) => {
-      return currentValue.padStart(targetLength, padString);
-    });
+      return currentValue.padStart(targetLength, padString)
+    })
   }
 
   padEnd(targetLength: number, padString?: string): StringPlugins {
     return this.enqueue('padEnd', (currentValue: string) => {
-      return String(currentValue).padEnd(targetLength, padString);
-    });
+      return String(currentValue).padEnd(targetLength, padString)
+    })
   }
 }

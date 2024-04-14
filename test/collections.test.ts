@@ -1,4 +1,5 @@
-import oproxy, { string } from '../src';
+import { describe, expect, it } from 'vitest'
+import oproxy, { string } from '../src'
 
 const src = [
   {
@@ -19,13 +20,13 @@ const src = [
     username: 'Samantha',
     email: 'Nathan@yesenia.net',
   },
-];
+]
 
-describe('Collections', () => {
-  it('Simple Normalizing', () => {
+describe('collections', () => {
+  it('simple Normalizing', () => {
     const schema = {
       fullName: string('name'),
-    };
+    }
 
     expect(oproxy(src, schema)).toEqual([
       {
@@ -37,6 +38,6 @@ describe('Collections', () => {
       {
         fullName: 'Clementine Bauch',
       },
-    ]);
-  });
-});
+    ])
+  })
+})

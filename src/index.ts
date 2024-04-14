@@ -1,12 +1,12 @@
-import { string } from './plugins/string';
-import { number } from './plugins/number';
-import { array } from './plugins/array';
-import { boolean } from './plugins/boolean';
-import { isSchema } from './utils/isSchema';
-import { compose } from './utils/compose';
-import { get } from './utils/get';
-import { InferType, Schema } from './types';
-import { canceledSymbol } from './plugins/core';
+import { string } from "./plugins/string";
+import { number } from "./plugins/number";
+import { array } from "./plugins/array";
+import { boolean } from "./plugins/boolean";
+import { isSchema } from "./utils/isSchema";
+import { compose } from "./utils/compose";
+import { get } from "./utils/get";
+import type { InferType, Schema } from "./types";
+import { canceledSymbol } from "./plugins/core";
 
 function run<T>(src: T, schema: any, schemaObject: any, key: string) {
   const fns = Array.from(schema?.tasks.values());
@@ -26,9 +26,8 @@ function proxy<T, S>(source: T, schema: InferType<S>): InferType<S> {
     switch (true) {
       case isSchema(value): {
         const result = run<T>(source, value, schema, prop);
-        if (result !== canceledSymbol) {
-          dist[prop] = result;
-        }
+        if (result !== canceledSymbol) dist[prop] = result;
+
         break;
       }
       default: {
@@ -40,15 +39,14 @@ function proxy<T, S>(source: T, schema: InferType<S>): InferType<S> {
 }
 
 function collectionIterator<T, S>(collection: T[], schema: InferType<S>) {
-  return collection.map(obj => {
+  return collection.map((obj) => {
     return proxy(obj, schema);
   });
 }
 
 export function oproxy<T>(source: T, schema: Schema) {
-  if (Array.isArray(source)) {
-    return collectionIterator(source, schema);
-  }
+  if (Array.isArray(source)) return collectionIterator(source, schema);
+
   return proxy(source, schema);
 }
 

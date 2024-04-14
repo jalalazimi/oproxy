@@ -1,65 +1,73 @@
 {
   "name": "oproxy",
+  "type": "module",
   "version": "0.0.5",
   "description": "A schema-based data mapper",
+  "author": "",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "homepage": "https://github.com/jalalazimi/oproxy#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jalalazimi/oproxy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jalalazimi/oproxy/issues"
+  },
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=12"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepare": "simple-git-hooks"
   },
-  "peerDependencies": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jalalazimi/oproxy.git"
-  },
-  "keywords": [],
-  "author": "",
-  "bugs": {
-    "url": "https://github.com/jalalazimi/oproxy/issues"
-  },
-  "homepage": "https://github.com/jalalazimi/oproxy#readme",
-  "module": "dist/oproxy.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/oproxy.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/oproxy.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^7.0.8",
-    "husky": "^7.0.4",
-    "size-limit": "^7.0.8",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.3.1",
-    "typescript": "^4.5.5"
+    "@antfu/eslint-config": "^2.13.3",
+    "@antfu/ni": "^0.21.12",
+    "@antfu/utils": "^0.7.7",
+    "@types/node": "^20.12.7",
+    "bumpp": "^9.4.0",
+    "eslint": "^8.57.0",
+    "esno": "^4.7.0",
+    "lint-staged": "^15.2.2",
+    "pnpm": "^8.15.7",
+    "rimraf": "^5.0.5",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
+    "vite": "^5.2.8",
+    "vitest": "^1.5.0"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

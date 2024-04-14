@@ -1,4 +1,5 @@
-import oproxy, { array, string } from '../src';
+import { describe, expect, it } from 'vitest'
+import oproxy, { array, string } from '../src'
 
 const src = {
   id: 'root',
@@ -45,7 +46,7 @@ const src = {
       ],
     },
   ],
-};
+}
 
 describe('nestedSchema', () => {
   it('array of Object', () => {
@@ -53,7 +54,7 @@ describe('nestedSchema', () => {
       userId: string('id').formatter(id => `user-${id}`),
       name: string('name').lowerCase(),
       children: array('children').proxy({ recursive: true }),
-    };
+    }
 
     expect(oproxy(src, nestedSchema)).toEqual({
       userId: 'user-root',
@@ -82,6 +83,6 @@ describe('nestedSchema', () => {
           ],
         },
       ],
-    });
-  });
-});
+    })
+  })
+})

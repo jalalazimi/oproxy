@@ -1,5 +1,5 @@
-import { ArrayPlugin } from './plugins';
+import { ArrayPlugin } from './plugins'
 
 export function array(key: string): ArrayPlugin {
-  return new ArrayPlugin(key);
+  return new ArrayPlugin(key)
 }

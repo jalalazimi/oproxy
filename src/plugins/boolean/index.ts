@@ -1,5 +1,5 @@
-import { BooleanPlugin } from './plugins';
+import { BooleanPlugin } from './plugins'
 
 export function boolean(key: string): BooleanPlugin {
-  return new BooleanPlugin(key);
+  return new BooleanPlugin(key)
 }

@@ -1,14 +1,14 @@
-export const canceledSymbol = Symbol('canceled');
+export const canceledSymbol = Symbol('canceled')
 export class Core {
-  tasks = new Map();
-  key: string;
+  tasks = new Map()
+  key: string
 
   constructor(key?: string) {
-    this.key = key ?? '';
+    this.key = key ?? ''
   }
 
   enqueue(name: string, fn: any) {
-    this.tasks.set(name, fn);
-    return this;
+    this.tasks.set(name, fn)
+    return this
   }
 }
